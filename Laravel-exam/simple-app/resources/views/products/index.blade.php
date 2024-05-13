@@ -15,7 +15,7 @@
                     <h3 class="text-black">Products </h3>
                     <hr>
                     <button type="button" class="btn btn-primary btn-sm mb-3" data-toggle="modal" data-target="#addProductModal">
-                    <i class="fas fa-user-plus"></i> Add product </button>
+                     Add product </button>
 
                     <table class="table table-bordered">
                         <thead class="bg-light text-dark">
@@ -108,7 +108,7 @@
             aria-labelledby="editProductModalLabel{{$product->id}}" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form method="POST" action="{{ route('products.update', ['id' => $product->id]) }}">
+                    <form method="POST" action="{{ route('products.update', ['id' => $product->id]) }}" enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
 
@@ -138,6 +138,10 @@
                                 <input type="number" name="price" value="{{$product->price}}" class="form-control">
                             </div>
 
+                            <div class="form-group">
+                                <label for="image">Product Image</label>
+                                <input type="file" class="form-control" value="{{$product->image}}" id="image" name="image">
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

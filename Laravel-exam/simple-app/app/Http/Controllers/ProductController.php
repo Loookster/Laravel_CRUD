@@ -70,9 +70,26 @@ class ProductController extends Controller
             'name' => $request->input('name'),
             'description' => $request->input('description'),
             'quantity' => $request->input('quantity'),
-            'price' => $request->input('price')
+            'price' => $request->input('price'),
+            'image' => $request->input('image')
+
         ];
 
+        if ($request->hasFile('image')) {
+            // Delete old image if it exists
+            if ($product->image) {
+                $imagePath = public_path('images/' . $product->image);
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+
+            // Upload and store new image
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+            $data['image'] = $imageName;
+        }
 
         $product->update($data);
 
